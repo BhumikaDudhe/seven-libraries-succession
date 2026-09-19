@@ -1,8 +1,8 @@
-﻿import { getBeeClient } from './beeClient';
+import { getBeeClient } from './beeClient';
 import { getStewardshipConfig } from '../../config/stewardship.config';
 
 export class CatalogueFeedService {
-  private bee = getBeeClient();
+  private bee: any = getBeeClient();
   private config = getStewardshipConfig();
 
   async publishCatalogueUpdate(
@@ -25,8 +25,8 @@ export class CatalogueFeedService {
 
     const feedResult = await feedWriter.upload(this.config.batchId, uploadResult.reference);
     return {
-      reference: uploadResult.reference,
-      feedIndex: feedResult.feedIndex || '0000000000000001',
+      reference: String(uploadResult.reference || uploadResult),
+      feedIndex: String(feedResult?.feedIndex || '0000000000000001'),
     };
   }
 }

@@ -1,8 +1,8 @@
-﻿import { getBeeClient } from './beeClient';
+import { getBeeClient } from './beeClient';
 import { getStewardshipConfig } from '../../config/stewardship.config';
 
 export class ReaderService {
-  private bee = getBeeClient();
+  private bee: any = getBeeClient();
   private config = getStewardshipConfig();
 
   async resolveCurrentPublisher(): Promise<string> {
@@ -13,8 +13,9 @@ export class ReaderService {
     );
 
     const pointerReference = await rootFeedReader.download();
-    const data = await this.bee.data.download(pointerReference.reference);
-    const parsed = JSON.parse(data.text());
+    const data = await this.bee.data.download(pointerReference.reference || pointerReference);
+    const textData = typeof data.text === 'function' ? data.text() : new TextDecoder().decode(data);
+    const parsed = JSON.parse(textData);
 
     if (!parsed.activePublisherAddress) {
       throw new Error('Stable pointer resolved invalid payload: missing activePublisherAddress');
@@ -33,8 +34,9 @@ export class ReaderService {
     );
 
     const contentRef = await catalogueFeedReader.download();
-    const rawData = await this.bee.data.download(contentRef.reference);
-    return JSON.parse(rawData.text());
+    const rawData = await this.bee.data.download(contentRef.reference || contentRef);
+    const textData = typeof rawData.text === 'function' ? rawData.text() : new TextDecoder().decode(rawData);
+    return JSON.parse(textData);
   }
 }
 

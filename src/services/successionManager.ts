@@ -1,4 +1,4 @@
-﻿import { getBeeClient } from './beeClient';
+import { getBeeClient } from './beeClient';
 import { getStewardshipConfig } from '../../config/stewardship.config';
 
 export interface SuccessionParams {
@@ -17,7 +17,7 @@ export interface SuccessionResult {
 }
 
 export class SuccessionManager {
-  private bee = getBeeClient();
+  private bee: any = getBeeClient();
   private config = getStewardshipConfig();
 
   async executeSuccession(params: SuccessionParams): Promise<SuccessionResult> {
@@ -56,8 +56,8 @@ export class SuccessionManager {
       success: true,
       previousSteward,
       activeSteward: incomingStewardAddress,
-      pointerFeedIndex: updateRes.feedIndex || '0000000000000002',
-      pointerReference: uploadRes.reference,
+      pointerFeedIndex: String(updateRes?.feedIndex || '0000000000000002'),
+      pointerReference: String(uploadRes?.reference || uploadRes),
       timestamp: new Date().toISOString(),
     };
   }

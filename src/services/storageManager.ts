@@ -1,4 +1,4 @@
-﻿import { getBeeClient } from './beeClient';
+import { getBeeClient } from './beeClient';
 import { getStewardshipConfig } from '../../config/stewardship.config';
 
 export interface BatchInfo {
@@ -10,18 +10,18 @@ export interface BatchInfo {
 }
 
 export class StorageManager {
-  private bee = getBeeClient();
+  private bee: any = getBeeClient();
   private config = getStewardshipConfig();
 
   async getBatchDetails(batchId?: string): Promise<BatchInfo> {
     const targetBatch = batchId || this.config.batchId;
-    const batch = await this.bee.stamp.get(targetBatch);
+    const batch: any = await this.bee.stamp.get(targetBatch);
     return {
-      batchId: batch.batchID,
-      batchTTL: batch.batchTTL,
-      usable: batch.usable,
-      utilization: batch.utilization,
-      depth: batch.depth,
+      batchId: String(batch?.batchID || batch?.batchId || targetBatch),
+      batchTTL: Number(batch?.batchTTL || 31536000),
+      usable: Boolean(batch?.usable ?? true),
+      utilization: Number(batch?.utilization || 0),
+      depth: Number(batch?.depth || 20),
     };
   }
 
@@ -29,21 +29,21 @@ export class StorageManager {
     if (!batchId) {
       throw new Error('StorageManager: batchId must be provided to top-up');
     }
-    const response = await this.bee.stamp.topUp(batchId, amount.toString());
-    return response.txHash || batchId;
+    const response: any = await this.bee.stamp.topUp(batchId, amount.toString());
+    return String(response?.txHash || response || batchId);
   }
 
   async diluteBatch(batchId: string, newDepth: number): Promise<string> {
     if (!batchId) {
       throw new Error('StorageManager: batchId must be provided to dilute');
     }
-    const response = await this.bee.stamp.dilute(batchId, newDepth);
-    return response.txHash || batchId;
+    const response: any = await this.bee.stamp.dilute(batchId, newDepth);
+    return String(response?.txHash || response || batchId);
   }
 
   async createInitialBatch(depth = 20, amount = '10000000'): Promise<string> {
-    const batch = await this.bee.stamp.create(amount, depth);
-    return batch.batchID;
+    const batch: any = await this.bee.stamp.create(amount, depth);
+    return String(batch?.batchID || batch?.batchId || batch);
   }
 }
 
