@@ -42,15 +42,15 @@ export class SuccessionManager {
       updatedAt: new Date().toISOString(),
     });
 
-    const uploadRes = await this.bee.data.upload(this.config.batchId, pointerPayload);
+    const uploadRes: any = await this.bee.data.upload(this.config.batchId, pointerPayload);
 
-    const rootFeedWriter = this.bee.feed.createFeedWriter(
+    const rootFeedWriter: any = this.bee.feed.createFeedWriter(
       'sequence',
       this.config.stablePointer.rootTopic,
       governanceAuthorityKey
     );
 
-    const updateRes = await rootFeedWriter.upload(this.config.batchId, uploadRes.reference);
+    const updateRes: any = await rootFeedWriter.upload(this.config.batchId, uploadRes.reference);
 
     return {
       success: true,

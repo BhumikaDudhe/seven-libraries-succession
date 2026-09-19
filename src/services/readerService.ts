@@ -6,14 +6,14 @@ export class ReaderService {
   private config = getStewardshipConfig();
 
   async resolveCurrentPublisher(): Promise<string> {
-    const rootFeedReader = this.bee.feed.createFeedReader(
+    const rootFeedReader: any = this.bee.feed.createFeedReader(
       'sequence',
       this.config.stablePointer.rootTopic,
       this.config.governance.councilAddress
     );
 
-    const pointerReference = await rootFeedReader.download();
-    const data = await this.bee.data.download(pointerReference.reference || pointerReference);
+    const pointerReference: any = await rootFeedReader.download();
+    const data: any = await this.bee.data.download(pointerReference.reference || pointerReference);
     const textData = typeof data.text === 'function' ? data.text() : new TextDecoder().decode(data);
     const parsed = JSON.parse(textData);
 
@@ -27,14 +27,14 @@ export class ReaderService {
   async readCatalogue(): Promise<Record<string, unknown>> {
     const activePublisher = await this.resolveCurrentPublisher();
 
-    const catalogueFeedReader = this.bee.feed.createFeedReader(
+    const catalogueFeedReader: any = this.bee.feed.createFeedReader(
       'sequence',
       'org.ladakh-spiti.catalogue.entries',
       activePublisher
     );
 
-    const contentRef = await catalogueFeedReader.download();
-    const rawData = await this.bee.data.download(contentRef.reference || contentRef);
+    const contentRef: any = await catalogueFeedReader.download();
+    const rawData: any = await this.bee.data.download(contentRef.reference || contentRef);
     const textData = typeof rawData.text === 'function' ? rawData.text() : new TextDecoder().decode(rawData);
     return JSON.parse(textData);
   }

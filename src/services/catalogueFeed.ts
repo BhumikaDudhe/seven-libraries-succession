@@ -16,14 +16,14 @@ export class CatalogueFeedService {
       version: '1.0.0',
     });
 
-    const uploadResult = await this.bee.data.upload(this.config.batchId, serialized);
-    const feedWriter = this.bee.feed.createFeedWriter(
+    const uploadResult: any = await this.bee.data.upload(this.config.batchId, serialized);
+    const feedWriter: any = this.bee.feed.createFeedWriter(
       'sequence',
       'org.ladakh-spiti.catalogue.entries',
       publisherPrivateKey
     );
 
-    const feedResult = await feedWriter.upload(this.config.batchId, uploadResult.reference);
+    const feedResult: any = await feedWriter.upload(this.config.batchId, uploadResult.reference);
     return {
       reference: String(uploadResult.reference || uploadResult),
       feedIndex: String(feedResult?.feedIndex || '0000000000000001'),
