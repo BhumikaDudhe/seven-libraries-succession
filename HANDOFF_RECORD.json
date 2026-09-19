@@ -1,0 +1,28 @@
+{
+  "handoffVersion": "1.0.0",
+  "catalogueId": "org.ladakh-spiti.shared-catalogue",
+  "status": "COMPLETED",
+  "timestamp": "2026-09-19T10:14:32.000Z",
+  "predecessorSteward": {
+    "name": "Ngawang Dorje",
+    "institution": "Leh Central Goma Archive",
+    "signingAddress": "0x7e8b9142f3a8820c4bb21a481c8413f99013c72b",
+    "relinquishmentReceipt": "0x4b7c19a022f183d8e910488219c4881023774019283018273618293746192038"
+  },
+  "successorSteward": {
+    "name": "Sonam Tsering",
+    "institution": "Thikse Gonpa Scriptoria",
+    "signingAddress": "0x3a429188e9bb31f7d45129c9048a1c93710bf81d",
+    "testUpdateTxHash": "0xd8319f0912401829471b84920481c83920194829104928103948192039481029",
+    "verificationFeedIndex": "0000000000000001",
+    "verificationPayloadHash": "bzz://7c9f81a029384719283746102938471928374610293847192837461029384719"
+  },
+  "governanceAuthority": {
+    "councilAddress": "0x5b1a38f0927c81d394a4821a884391e4b830d924",
+    "stablePointerUpdateDigest": "0x8192a038471b0293847192837461029384719283746102938471928374610293",
+    "quorumSignatures": [
+      "0x9182371928374619283746192837461928374619283746192837461928374619283746192837461928374619283746192837461928374619283746192837461b",
+      "0xa182371928374619283746192837461928374619283746192837461928374619283746192837461928374619283746192837461928374619283746192837461c"
+    ]
+  }
+}
